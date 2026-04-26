@@ -63,12 +63,12 @@ namespace DocTree.Forms
         {
             explorerTree.BeforeExpand += OnTreeBeforeExpand;
             explorerTree.AfterSelect += OnTreeAfterSelect;
-            explorerTree.NodeMouseDoubleClick += (_, e) => OpenNode(e.Node);
+            explorerTree.NodeMouseDoubleClick += (_, e) => OpenNode(e.Node, toggleDirectory: false);
             explorerTree.KeyDown += (_, e) =>
             {
                 if (e.KeyCode == Keys.Enter)
                 {
-                    OpenNode(explorerTree.SelectedNode);
+                    OpenNode(explorerTree.SelectedNode, toggleDirectory: true);
                     e.Handled = true;
                 }
             };
@@ -88,7 +88,7 @@ namespace DocTree.Forms
                 }
             };
             explorerContextMenu.Opening += OnContextMenuOpening;
-            ctxOpen.Click += (_, _) => OpenNode(explorerTree.SelectedNode);
+            ctxOpen.Click += (_, _) => OpenNode(explorerTree.SelectedNode, toggleDirectory: true);
             ctxOpenAsText.Click += (_, _) => ForceOpenAsText(explorerTree.SelectedNode);
             ctxRevealInExplorer.Click += (_, _) => RevealSelected();
             ctxCopyPath.Click += (_, _) => CopyPathOfSelected();
@@ -216,12 +216,15 @@ namespace DocTree.Forms
 
         // ----- Open file -----
 
-        private void OpenNode(TreeNode? node)
+        private void OpenNode(TreeNode? node, bool toggleDirectory)
         {
             if (node?.Tag is not NodeTag tag) return;
             if (tag.IsDirectory)
             {
-                node.Toggle();
+                if (toggleDirectory)
+                {
+                    node.Toggle();
+                }
                 return;
             }
             OpenFile(tag.Path);
@@ -519,7 +522,7 @@ namespace DocTree.Forms
             ctxCopyPath.Enabled = hasPath;
             ctxRefresh.Enabled = isDir;
 
-            // 「○○で開く」サブメニューを動的構築
+            // 「別なアプリで開く」サブメニューを動的構築
             ctxOpenWith.DropDownItems.Clear();
             var editors = _appContext.Settings.ExternalEditors ?? new();
             if (editors.Count == 0 || !isFile)

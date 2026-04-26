@@ -45,7 +45,7 @@
     { "path": "C:\\Users\\me\\Documents\\Work\\drafts", "readOnly": "writable" }
   ],
 
-  // 「○○で開く」候補。
+  // 「別なアプリで開く」候補。
   "externalEditors": [
     {
       "name": "サクラエディタ",

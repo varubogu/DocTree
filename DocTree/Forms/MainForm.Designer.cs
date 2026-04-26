@@ -164,7 +164,7 @@ namespace DocTree.Forms
             explorerContextMenu.Name = "explorerContextMenu";
 
             ctxOpen.Name = "ctxOpen"; ctxOpen.Text = "開く";
-            ctxOpenWith.Name = "ctxOpenWith"; ctxOpenWith.Text = "○○で開く";
+            ctxOpenWith.Name = "ctxOpenWith"; ctxOpenWith.Text = "別なアプリで開く";
             ctxOpenAsText.Name = "ctxOpenAsText"; ctxOpenAsText.Text = "テキストとして強制で開く";
             ctxRevealInExplorer.Name = "ctxRevealInExplorer"; ctxRevealInExplorer.Text = "エクスプローラで表示";
             ctxCopyPath.Name = "ctxCopyPath"; ctxCopyPath.Text = "パスをコピー";
