@@ -14,5 +14,8 @@
     <File Path="docs/symlinks-and-shortcuts.md" />
     <File Path="docs/troubleshooting.md" />
   </Folder>
+  <Folder Name="/ソリューション項目/">
+    <File Path="AGENTS.md" />
+  </Folder>
   <Project Path="DocTree/DocTree.csproj" />
 </Solution>
