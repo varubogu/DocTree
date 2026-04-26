@@ -37,19 +37,22 @@
   // エディタ表示フォント。
   "font": { "family": "Consolas", "size": 11.0 },
 
+  // 全ルート共通でツリーから除外するフォルダ・ファイル名（完全一致、大文字小文字無視）。
+  "exclude": [ ".git", ".obsidian" ],
+
   // ルートフォルダ（複数指定可）。
   // path はローカルパスまたは UNC パス (\\server\share\...)。
   // readOnly:
   //   "inherit"  ... アプリ全体の readOnly に従う
   //   "readOnly" ... このルート配下を読み取り専用にする
   //   "writable" ... このルート配下を編集可能にする
-  // exclude: ツリーから除外するフォルダ・ファイル名（完全一致、大文字小文字無視）。
+  // exclude: このルートだけで追加除外するフォルダ・ファイル名（完全一致、大文字小文字無視）。
   "roots": [
     // {
     //   "name": "Work Docs",
     //   "path": "C:\\Users\\me\\Documents\\Work",
     //   "readOnly": "inherit",
-    //   "exclude": [ ".git", "node_modules", "bin", "obj" ]
+    //   "exclude": [ "node_modules", "bin", "obj" ]
     // },
     // {
     //   "name": "Shared",

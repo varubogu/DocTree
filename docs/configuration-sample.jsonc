@@ -25,13 +25,16 @@
   // 表示フォント。
   "font": { "family": "Consolas", "size": 11.0 },
 
+  // 全ルート共通でツリーから除外するフォルダ・ファイル名。
+  "exclude": [ ".git" ],
+
   // ルートフォルダ。複数指定可。
   "roots": [
     {
       "name": "Work Docs",
       "path": "C:\\Users\\me\\Documents\\Work",
       "readOnly": "inherit",
-      "exclude": [ ".git", "node_modules", "bin", "obj" ]
+      "exclude": [ "node_modules", "bin", "obj" ]
     },
     {
       "name": "Shared (NAS)",

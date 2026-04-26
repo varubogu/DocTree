@@ -24,6 +24,11 @@ namespace DocTree.Models
 
         public FontSetting Font { get; set; } = new();
 
+        public List<string> Exclude { get; set; } = new()
+        {
+            ".git"
+        };
+
         public List<RootFolder> Roots { get; set; } = new();
 
         public List<PathOverride> Overrides { get; set; } = new();

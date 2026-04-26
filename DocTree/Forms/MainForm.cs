@@ -155,7 +155,7 @@ namespace DocTree.Forms
                         var entries = new List<FsEntry>();
                         try
                         {
-                            foreach (var entry in _appContext.Scanner.EnumerateChildren(tag.Path, tag.OwningRoot))
+                            foreach (var entry in _appContext.Scanner.EnumerateChildren(tag.Path, _appContext.Settings, tag.OwningRoot))
                                 entries.Add(entry);
                         }
                         catch { /* ignore */ }
@@ -200,7 +200,7 @@ namespace DocTree.Forms
 
         private void PopulateChildren(TreeNode parentNode, NodeTag parentTag)
         {
-            foreach (var entry in _appContext.Scanner.EnumerateChildren(parentTag.Path, parentTag.OwningRoot))
+            foreach (var entry in _appContext.Scanner.EnumerateChildren(parentTag.Path, _appContext.Settings, parentTag.OwningRoot))
             {
                 var child = new TreeNode(entry.Name)
                 {

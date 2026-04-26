@@ -37,6 +37,7 @@ namespace DocTree.Services.Settings
             // null 防御
             settings.TextExtensions ??= new();
             settings.TextFilenames ??= new();
+            settings.Exclude ??= new();
             settings.Roots ??= new();
             settings.Overrides ??= new();
             settings.ExternalEditors ??= new();
@@ -52,6 +53,11 @@ namespace DocTree.Services.Settings
                 var e = settings.TextExtensions[i].Trim().ToLowerInvariant();
                 if (!e.StartsWith('.')) e = "." + e;
                 settings.TextExtensions[i] = e;
+            }
+
+            foreach (var root in settings.Roots)
+            {
+                root.Exclude ??= new();
             }
 
             return new SettingsLoadResult

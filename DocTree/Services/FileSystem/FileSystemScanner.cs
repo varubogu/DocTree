@@ -15,7 +15,7 @@ namespace DocTree.Services.FileSystem
     /// </summary>
     public sealed class FileSystemScanner
     {
-        public IEnumerable<FsEntry> EnumerateChildren(string folderPath, RootFolder owningRoot)
+        public IEnumerable<FsEntry> EnumerateChildren(string folderPath, AppSettings settings, RootFolder owningRoot)
         {
             DirectoryInfo dir;
             try
@@ -38,9 +38,11 @@ namespace DocTree.Services.FileSystem
                 yield break;
             }
 
-            var excludeSet = new HashSet<string>(
-                owningRoot.Exclude ?? new(),
-                StringComparer.OrdinalIgnoreCase);
+            var excludeSet = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var name in settings.Exclude ?? new())
+                excludeSet.Add(name);
+            foreach (var name in owningRoot.Exclude ?? new())
+                excludeSet.Add(name);
 
             // ディレクトリ → ファイル の順、それぞれ名前順
             var snapshot = new List<FileSystemInfo>();
