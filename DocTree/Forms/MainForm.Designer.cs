@@ -37,6 +37,7 @@ namespace DocTree.Forms
         private ToolStripMenuItem ctxRevealInExplorer;
         private ToolStripMenuItem ctxCopyPath;
         private ToolStripMenuItem ctxRefresh;
+        private ToolStripMenuItem ctxRemoveRoot;
         private ToolStripSeparator ctxSep2;
         private ToolStripMenuItem ctxOpenAsText;
         private TabControl documentTabs;
@@ -72,6 +73,7 @@ namespace DocTree.Forms
             ctxRevealInExplorer = new ToolStripMenuItem();
             ctxCopyPath = new ToolStripMenuItem();
             ctxRefresh = new ToolStripMenuItem();
+            ctxRemoveRoot = new ToolStripMenuItem();
             ctxSep2 = new ToolStripSeparator();
             ctxOpenAsText = new ToolStripMenuItem();
             documentTabs = new TabControl();
@@ -159,7 +161,7 @@ namespace DocTree.Forms
             explorerContextMenu.Items.AddRange(new ToolStripItem[]
             {
                 ctxOpen, ctxOpenWith, ctxSep2, ctxOpenAsText, ctxSep1,
-                ctxRevealInExplorer, ctxCopyPath, ctxRefresh
+                ctxRevealInExplorer, ctxCopyPath, ctxRefresh, ctxRemoveRoot
             });
             explorerContextMenu.Name = "explorerContextMenu";
 
@@ -169,6 +171,7 @@ namespace DocTree.Forms
             ctxRevealInExplorer.Name = "ctxRevealInExplorer"; ctxRevealInExplorer.Text = "エクスプローラで表示";
             ctxCopyPath.Name = "ctxCopyPath"; ctxCopyPath.Text = "パスをコピー";
             ctxRefresh.Name = "ctxRefresh"; ctxRefresh.Text = "再読み込み";
+            ctxRemoveRoot.Name = "ctxRemoveRoot"; ctxRemoveRoot.Text = "ルートフォルダの設定解除";
 
             // explorerTree
             explorerTree.Dock = DockStyle.Fill;

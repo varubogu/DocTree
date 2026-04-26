@@ -3,6 +3,7 @@ using DocTree.App;
 using DocTree.Models;
 using DocTree.Services.ExternalOpen;
 using DocTree.Services.FileSystem;
+using DocTree.Services.Settings;
 using DocTree.Services.State;
 using DocTree.Services.Text;
 
@@ -93,6 +94,7 @@ namespace DocTree.Forms
             ctxRevealInExplorer.Click += (_, _) => RevealSelected();
             ctxCopyPath.Click += (_, _) => CopyPathOfSelected();
             ctxRefresh.Click += (_, _) => RefreshSelectedNode();
+            ctxRemoveRoot.Click += (_, _) => RemoveSelectedRoot();
         }
 
         // ----- Tree -----
@@ -123,7 +125,7 @@ namespace DocTree.Forms
 
                 if (explorerTree.Nodes.Count == 0)
                 {
-                    var hint = new TreeNode("ルートフォルダが未設定です。[ファイル] > [設定ファイルを開く] から roots を追加してください。")
+                    var hint = new TreeNode("ルートフォルダが未設定です。[ファイル] > [ルートフォルダを追加...] から追加してください。")
                     {
                         ForeColor = SystemColors.GrayText
                     };
@@ -409,21 +411,33 @@ namespace DocTree.Forms
             };
             if (dlg.ShowDialog(this) != DialogResult.OK) return;
 
-            MessageBox.Show(
-                this,
-                "選択したパス:\n" + dlg.SelectedPath +
-                "\n\n設定ファイル (settings.jsonc) の \"roots\" 配列に以下を追記してから\n" +
-                "[ファイル] > [設定を再読み込み] (Ctrl+R) を実行してください。\n\n" +
-                "{\n" +
-                "  \"name\": \"" + Path.GetFileName(dlg.SelectedPath.TrimEnd(Path.DirectorySeparatorChar)) + "\",\n" +
-                "  \"path\": \"" + dlg.SelectedPath.Replace(@"\", @"\\") + "\",\n" +
-                "  \"readOnly\": \"inherit\"\n" +
-                "}",
-                "ルートフォルダの追加",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+            try
+            {
+                var selectedPath = Path.GetFullPath(dlg.SelectedPath);
+                var root = new RootFolder
+                {
+                    Name = GetDefaultRootName(selectedPath),
+                    Path = selectedPath,
+                    ReadOnly = ReadOnlyMode.Inherit
+                };
 
-            OnOpenSettings(this, EventArgs.Empty);
+                var added = SettingsRootWriter.AddRoot(_appContext.SettingsPath, root);
+                if (!added)
+                {
+                    MessageBox.Show(this,
+                        "このルートフォルダは既に設定されています。\n\n" + selectedPath,
+                        "ルートフォルダの追加",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                    return;
+                }
+
+                OnReloadSettings(this, EventArgs.Empty);
+            }
+            catch (Exception ex)
+            {
+                ShowError("ルートフォルダを追加できませんでした。", ex);
+            }
         }
 
         private void OnOpenSettings(object? sender, EventArgs e)
@@ -505,6 +519,13 @@ namespace DocTree.Forms
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
+        private static string GetDefaultRootName(string path)
+        {
+            var trimmed = path.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+            var name = Path.GetFileName(trimmed);
+            return string.IsNullOrWhiteSpace(name) ? trimmed : name;
+        }
+
         // ----- Context menu -----
 
         private void OnContextMenuOpening(object? sender, System.ComponentModel.CancelEventArgs e)
@@ -515,12 +536,15 @@ namespace DocTree.Forms
             bool hasPath = tag is not null && !string.IsNullOrEmpty(tag.Path);
             bool isFile = hasPath && tag!.IsDirectory == false;
             bool isDir  = hasPath && tag!.IsDirectory;
+            bool isRoot = hasPath && node?.Parent is null && tag!.IsDirectory;
 
             ctxOpen.Enabled = hasPath;
             ctxOpenAsText.Enabled = isFile;
             ctxRevealInExplorer.Enabled = hasPath;
             ctxCopyPath.Enabled = hasPath;
             ctxRefresh.Enabled = isDir;
+            ctxRemoveRoot.Visible = isRoot;
+            ctxRemoveRoot.Enabled = isRoot;
 
             // 「別なアプリで開く」サブメニューを動的構築
             ctxOpenWith.DropDownItems.Clear();
@@ -589,6 +613,39 @@ namespace DocTree.Forms
                 node.Nodes.Add(new TreeNode("...") { Name = DummyNodeKey });
                 node.Collapse();
                 node.Expand();
+            }
+        }
+
+        private void RemoveSelectedRoot()
+        {
+            if (explorerTree.SelectedNode?.Tag is not NodeTag tag) return;
+
+            var result = MessageBox.Show(this,
+                "このルートフォルダの設定を解除しますか？\n\n" + tag.Path,
+                "ルートフォルダの設定解除",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button2);
+            if (result != DialogResult.Yes) return;
+
+            try
+            {
+                var removed = SettingsRootWriter.RemoveRoot(_appContext.SettingsPath, tag.OwningRoot.Path);
+                if (!removed)
+                {
+                    MessageBox.Show(this,
+                        "このルートフォルダは設定ファイル内に見つかりませんでした。\n\n" + tag.Path,
+                        "ルートフォルダの設定解除",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                    return;
+                }
+
+                OnReloadSettings(this, EventArgs.Empty);
+            }
+            catch (Exception ex)
+            {
+                ShowError("ルートフォルダの設定を解除できませんでした。", ex);
             }
         }
 
