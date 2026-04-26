@@ -25,13 +25,13 @@ namespace DocTree.Services.ExternalOpen
             Process.Start(psi);
         }
 
-        public void RevealInExplorer(string fullPath)
+        public void RevealInExplorer(string fullPath, bool isDirectory)
         {
-            // /select で対象を選択した状態でエクスプローラを開く
+            // ファイルは従来通り選択表示し、フォルダはその中を開く。
             var psi = new ProcessStartInfo
             {
                 FileName = "explorer.exe",
-                Arguments = "/select,\"" + fullPath + "\"",
+                Arguments = isDirectory ? "\"" + fullPath + "\"" : "/select,\"" + fullPath + "\"",
                 UseShellExecute = true
             };
             Process.Start(psi);

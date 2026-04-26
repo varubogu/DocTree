@@ -592,7 +592,7 @@ namespace DocTree.Forms
         private void RevealSelected()
         {
             if (explorerTree.SelectedNode?.Tag is not NodeTag tag) return;
-            try { _launcher.RevealInExplorer(tag.Path); }
+            try { _launcher.RevealInExplorer(tag.Path, tag.IsDirectory); }
             catch (Exception ex) { ShowError("エクスプローラで表示できませんでした。", ex); }
         }
 
