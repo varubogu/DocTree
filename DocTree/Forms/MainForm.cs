@@ -284,22 +284,17 @@ namespace DocTree.Forms
                 Tag = buf
             };
 
-            var box = new TextBox
+            var viewer = new TextViewerControl
             {
-                Multiline = true,
-                ReadOnly = buf.IsReadOnly,
-                ScrollBars = ScrollBars.Both,
                 WordWrap = viewWordWrapMenu.Checked,
                 Dock = DockStyle.Fill,
-                AcceptsTab = true,
-                AcceptsReturn = true,
-                MaxLength = 0,
-                Font = new Font(_appContext.Settings.Font.Family, _appContext.Settings.Font.Size),
-                Text = buf.Text
+                Font = new Font(FontFamily.GenericMonospace, _appContext.Settings.Font.Size),
+                TextContent = buf.Text,
+                ReadOnly = buf.IsReadOnly
             };
-            box.Select(0, 0);
+            viewer.SelectStart();
 
-            page.Controls.Add(box);
+            page.Controls.Add(viewer);
             documentTabs.TabPages.Add(page);
             documentTabs.SelectedTab = page;
             UpdateStatusFromBuffer(buf);
@@ -311,10 +306,9 @@ namespace DocTree.Forms
             {
                 foreach (Control c in page.Controls)
                 {
-                    if (c is TextBox tb)
+                    if (c is TextViewerControl viewer)
                     {
-                        tb.WordWrap = viewWordWrapMenu.Checked;
-                        tb.ScrollBars = viewWordWrapMenu.Checked ? ScrollBars.Vertical : ScrollBars.Both;
+                        viewer.WordWrap = viewWordWrapMenu.Checked;
                     }
                 }
             }
