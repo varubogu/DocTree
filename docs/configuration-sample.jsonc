@@ -1,0 +1,67 @@
+{
+  // === DocTree 設定ファイルの完全サンプル ===
+
+  // アプリ全体の読み取り専用モード。
+  "readOnly": true,
+
+  // テキスト判定のホワイトリスト拡張子（小文字、ドット付き）。
+  "textExtensions": [
+    ".txt", ".md", ".markdown", ".log", ".csv", ".tsv",
+    ".json", ".jsonc", ".xml", ".yaml", ".yml", ".ini", ".toml",
+    ".cs", ".ts", ".tsx", ".js", ".jsx", ".py", ".rb", ".go", ".rs",
+    ".sql", ".html", ".htm", ".css", ".scss", ".sass",
+    ".sh", ".ps1", ".bat", ".cmd"
+  ],
+
+  // 拡張子なしでもテキスト扱いするファイル名。
+  "textFilenames": [ "README", "LICENSE", "Makefile", "Dockerfile", "CHANGELOG" ],
+
+  // バイナリ判定で読む先頭バイト数。
+  "binarySniffBytes": 8192,
+
+  // BOMなし時のフォールバックエンコーディング。
+  "defaultEncoding": "utf-8",
+
+  // 表示フォント。
+  "font": { "family": "Consolas", "size": 11.0 },
+
+  // ルートフォルダ。複数指定可。
+  "roots": [
+    {
+      "name": "Work Docs",
+      "path": "C:\\Users\\me\\Documents\\Work",
+      "readOnly": "inherit",
+      "exclude": [ ".git", "node_modules", "bin", "obj" ]
+    },
+    {
+      "name": "Shared (NAS)",
+      "path": "\\\\fileserver\\share\\docs",
+      "readOnly": "readOnly"
+    }
+  ],
+
+  // パス単位の読み取り専用オーバーライド。
+  "overrides": [
+    { "path": "C:\\Users\\me\\Documents\\Work\\drafts", "readOnly": "writable" }
+  ],
+
+  // 「○○で開く」候補。
+  "externalEditors": [
+    {
+      "name": "サクラエディタ",
+      "exe":  "C:\\Program Files (x86)\\sakura\\sakura.exe",
+      "args": "\"{path}\""
+    },
+    {
+      "name": "VS Code",
+      "exe":  "code",
+      "args": "--goto \"{path}:{line}\"",
+      "default": true
+    },
+    {
+      "name": "メモ帳",
+      "exe":  "notepad.exe",
+      "args": "\"{path}\""
+    }
+  ]
+}

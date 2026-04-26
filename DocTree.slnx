@@ -1,0 +1,17 @@
+<Solution>
+  <Folder Name="/docs/">
+    <File Path="docs/architecture.md" />
+    <File Path="docs/build-and-run.md" />
+    <File Path="docs/configuration-sample.jsonc" />
+    <File Path="docs/configuration.md" />
+    <File Path="docs/encoding.md" />
+    <File Path="docs/external-editors.md" />
+    <File Path="docs/getting-started.md" />
+    <File Path="docs/keyboard-shortcuts.md" />
+    <File Path="docs/read-only-modes.md" />
+    <File Path="docs/README.md" />
+    <File Path="docs/symlinks-and-shortcuts.md" />
+    <File Path="docs/troubleshooting.md" />
+  </Folder>
+  <Project Path="DocTree/DocTree.csproj" />
+</Solution>

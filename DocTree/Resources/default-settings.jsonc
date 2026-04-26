@@ -1,0 +1,82 @@
+{
+  // ===========================================================================
+  // DocTree 設定ファイル (settings.jsonc)
+  //
+  // このファイルは JSONC (JSON with Comments) 形式です。
+  // C / C++ 風のコメント (// と /* ... */) を記述できます。
+  //
+  // 編集後はアプリのメニュー [ファイル] > [設定を再読み込み] (Ctrl+R)
+  // または再起動で反映されます。
+  // ===========================================================================
+
+  // アプリ全体の読み取り専用モード。
+  // true なら全ファイル編集不可（"○○で開く" 経由なら編集可）。
+  "readOnly": true,
+
+  // テキスト判定のホワイトリスト拡張子（小文字、ドット付き）。
+  // ここに含まれない拡張子のファイルはバイナリ扱いで開きません。
+  "textExtensions": [
+    ".txt", ".md", ".markdown", ".log", ".csv", ".tsv",
+    ".json", ".jsonc", ".xml", ".yaml", ".yml", ".ini", ".toml",
+    ".cs", ".ts", ".tsx", ".js", ".jsx", ".py", ".rb", ".go", ".rs",
+    ".sql", ".html", ".htm", ".css", ".scss", ".sass",
+    ".sh", ".ps1", ".bat", ".cmd"
+  ],
+
+  // 拡張子なしでもテキスト扱いするファイル名（完全一致、大文字小文字無視）。
+  "textFilenames": [ "README", "LICENSE", "Makefile", "Dockerfile", "CHANGELOG" ],
+
+  // バイナリ判定（ヌルバイト検出）で先頭何バイト読むか。
+  "binarySniffBytes": 8192,
+
+  // BOMなし時のフォールバックエンコーディング。
+  // 対応値: "utf-8" | "utf-16le" | "utf-16be"
+  // (Shift_JIS / EUC-JP には対応しません)
+  "defaultEncoding": "utf-8",
+
+  // エディタ表示フォント。
+  "font": { "family": "Consolas", "size": 11.0 },
+
+  // ルートフォルダ（複数指定可）。
+  // path はローカルパスまたは UNC パス (\\server\share\...)。
+  // readOnly:
+  //   "inherit"  ... アプリ全体の readOnly に従う
+  //   "readOnly" ... このルート配下を読み取り専用にする
+  //   "writable" ... このルート配下を編集可能にする
+  // exclude: ツリーから除外するフォルダ・ファイル名（完全一致、大文字小文字無視）。
+  "roots": [
+    // {
+    //   "name": "Work Docs",
+    //   "path": "C:\\Users\\me\\Documents\\Work",
+    //   "readOnly": "inherit",
+    //   "exclude": [ ".git", "node_modules", "bin", "obj" ]
+    // },
+    // {
+    //   "name": "Shared",
+    //   "path": "\\\\fileserver\\share\\docs",
+    //   "readOnly": "readOnly"
+    // }
+  ],
+
+  // ファイル/フォルダ単位の読み取り専用オーバーライド（path は前方一致、最長一致が勝つ）。
+  "overrides": [
+    // { "path": "C:\\Users\\me\\Documents\\Work\\drafts", "readOnly": "writable" }
+  ],
+
+  // 「○○で開く」候補。
+  // args の中で {path} {line} {column} を置換します。
+  // default: true のものを最優先候補（ダブルクリック既定）に使えます。
+  "externalEditors": [
+    // {
+    //   "name": "サクラエディタ",
+    //   "exe":  "C:\\Program Files (x86)\\sakura\\sakura.exe",
+    //   "args": "\"{path}\"",
+    //   "default": false
+    // },
+    // {
+    //   "name": "VS Code",
+    //   "exe":  "code",
+    //   "args": "--goto \"{path}:{line}\""
+    // }
+  ]
+}
