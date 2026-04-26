@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\default-settings.jsonc" />
+    <EmbeddedResource Include="Resources\default-project-settings.jsonc" />
   </ItemGroup>
 
 </Project>

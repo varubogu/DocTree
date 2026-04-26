@@ -28,26 +28,6 @@
   // 全ルート共通でツリーから除外するフォルダ・ファイル名。
   "exclude": [ ".git" ],
 
-  // ルートフォルダ。複数指定可。
-  "roots": [
-    {
-      "name": "Work Docs",
-      "path": "C:\\Users\\me\\Documents\\Work",
-      "readOnly": "inherit",
-      "exclude": [ "node_modules", "bin", "obj" ]
-    },
-    {
-      "name": "Shared (NAS)",
-      "path": "\\\\fileserver\\share\\docs",
-      "readOnly": "readOnly"
-    }
-  ],
-
-  // パス単位の読み取り専用オーバーライド。
-  "overrides": [
-    { "path": "C:\\Users\\me\\Documents\\Work\\drafts", "readOnly": "writable" }
-  ],
-
   // 「別なアプリで開く」候補。
   "externalEditors": [
     {

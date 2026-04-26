@@ -4,6 +4,7 @@ namespace DocTree.App
     {
         public const string AppFolderName = "DocTree";
         public const string SettingsFileName = "settings.jsonc";
+        public const string ProjectSettingsFileName = "project-settings.jsonc";
         public const string StateFileName = "state.json";
 
         public static string ExeDirectory =>
@@ -17,8 +18,14 @@ namespace DocTree.App
         public static string PortableSettingsPath =>
             Path.Combine(ExeDirectory, SettingsFileName);
 
+        public static string PortableProjectSettingsPath =>
+            Path.Combine(ExeDirectory, ProjectSettingsFileName);
+
         public static string AppDataSettingsPath =>
             Path.Combine(AppDataDirectory, SettingsFileName);
+
+        public static string AppDataProjectSettingsPath =>
+            Path.Combine(AppDataDirectory, ProjectSettingsFileName);
 
         public static string AppDataStatePath =>
             Path.Combine(AppDataDirectory, StateFileName);

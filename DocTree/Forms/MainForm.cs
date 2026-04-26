@@ -32,7 +32,7 @@ namespace DocTree.Forms
 
             LoadRootsIntoTree();
             UpdateStatus(path: "", encoding: "", eol: "", readOnly: _appContext.Settings.ReadOnly);
-            Text = $"DocTree — {_appContext.SettingsPath}";
+            Text = $"DocTree — {_appContext.SettingsPath} / {_appContext.ProjectSettingsPath}";
 
             Load += OnFormLoadRestoreState;
             FormClosing += OnFormClosingPersistState;
@@ -421,7 +421,7 @@ namespace DocTree.Forms
                     ReadOnly = ReadOnlyMode.Inherit
                 };
 
-                var added = SettingsRootWriter.AddRoot(_appContext.SettingsPath, root);
+                var added = SettingsRootWriter.AddRoot(_appContext.ProjectSettingsPath, root);
                 if (!added)
                 {
                     MessageBox.Show(this,
@@ -630,7 +630,7 @@ namespace DocTree.Forms
 
             try
             {
-                var removed = SettingsRootWriter.RemoveRoot(_appContext.SettingsPath, tag.OwningRoot.Path);
+                var removed = SettingsRootWriter.RemoveRoot(_appContext.ProjectSettingsPath, tag.OwningRoot.Path);
                 if (!removed)
                 {
                     MessageBox.Show(this,

@@ -1,0 +1,23 @@
+{
+  // === DocTree プロジェクト設定ファイルの完全サンプル ===
+
+  // ルートフォルダ。複数指定可。
+  "roots": [
+    {
+      "name": "Work Docs",
+      "path": "C:\\Users\\me\\Documents\\Work",
+      "readOnly": "inherit",
+      "exclude": [ "node_modules", "bin", "obj" ]
+    },
+    {
+      "name": "Shared (NAS)",
+      "path": "\\\\fileserver\\share\\docs",
+      "readOnly": "readOnly"
+    }
+  ],
+
+  // パス単位の読み取り専用オーバーライド。
+  "overrides": [
+    { "path": "C:\\Users\\me\\Documents\\Work\\drafts", "readOnly": "writable" }
+  ]
+}

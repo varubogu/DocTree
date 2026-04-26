@@ -11,6 +11,7 @@ dotnet run --project DocTree/DocTree.csproj
 
 ```
 %AppData%\DocTree\settings.jsonc
+%AppData%\DocTree\project-settings.jsonc
 ```
 
 ## 2. ルートフォルダを追加する
@@ -19,7 +20,7 @@ DocTree は **ルートフォルダ** を起点にツリーを表示します。
 
 ### 方法 A: 設定ファイルを直接編集
 
-`%AppData%\DocTree\settings.jsonc` を開き、`roots` 配列に追記:
+`%AppData%\DocTree\project-settings.jsonc` を開き、`roots` 配列に追記:
 
 ```jsonc
 "roots": [
@@ -35,8 +36,7 @@ DocTree は **ルートフォルダ** を起点にツリーを表示します。
 
 ### 方法 B: メニュー [ファイル] > [ルートフォルダを追加...]
 
-フォルダ選択ダイアログでパスを選ぶと、追記すべき JSON 断片が表示されます。
-それを `settings.jsonc` の `roots` 配列にコピペし、Ctrl+R で再読込してください。
+フォルダ選択ダイアログでパスを選ぶと、`project-settings.jsonc` の `roots` 配列に自動で追記され、そのまま反映されます。
 
 (設定 GUI は意図的に持たず、すべてファイル編集で完結する方針です)
 
@@ -55,6 +55,7 @@ DocTree は **ルートフォルダ** を起点にツリーを表示します。
 ## 4. ポータブル運用
 
 `exe` と同じフォルダに `settings.jsonc` を置くと、`%AppData%` よりも優先されます。
+この場合、`project-settings.jsonc` も同じフォルダから読み込まれます。
 USB メモリで持ち運ぶ運用にも対応します。
 
 ただしアプリ状態 (タブ復元・ウィンドウ位置) は常に `%AppData%\DocTree\state.json` に書かれます。

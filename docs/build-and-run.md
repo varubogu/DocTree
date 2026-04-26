@@ -33,7 +33,7 @@ dotnet publish DocTree/DocTree.csproj -c Release -r win-x64 --self-contained tru
 ```
 
 成果物は `DocTree/bin/Release/net10.0-windows/win-x64/publish/` に出力されます。
-配布する場合は exe と同じフォルダに `settings.jsonc` を置けば **ポータブル運用** ができます。
+配布する場合は exe と同じフォルダに `settings.jsonc` と `project-settings.jsonc` を置けば **ポータブル運用** ができます。
 
 ## Framework-dependent 配布 (.NET ランタイム別途必要)
 
@@ -49,4 +49,4 @@ dotnet publish DocTree/DocTree.csproj -c Release -r win-x64 --self-contained fal
 DocTree はインストーラを持ちません。以下を削除すれば完全にクリーンな状態に戻ります。
 
 - exe を置いたフォルダ
-- `%AppData%\DocTree\` (`settings.jsonc`, `state.json` が入っています)
+- `%AppData%\DocTree\` (`settings.jsonc`, `project-settings.jsonc`, `state.json` が入っています)

@@ -6,9 +6,9 @@ DocTree は閲覧専用ツールですが、誤編集を防ぐため明示的に
 
 | 順位 | 設定箇所 | キー |
 |---|---|---|
-| 1 | パス単位オーバーライド (前方一致最長マッチ) | `overrides[].readOnly` |
-| 2 | ルートフォルダ単位 | `roots[i].readOnly` |
-| 3 | アプリ全体 | `readOnly` (トップレベル) |
+| 1 | パス単位オーバーライド (前方一致最長マッチ) | `project-settings.jsonc` の `overrides[].readOnly` |
+| 2 | ルートフォルダ単位 | `project-settings.jsonc` の `roots[i].readOnly` |
+| 3 | アプリ全体 | `settings.jsonc` の `readOnly` |
 
 それぞれの設定値:
 
@@ -24,8 +24,15 @@ DocTree は閲覧専用ツールですが、誤編集を防ぐため明示的に
 ## 例
 
 ```jsonc
+// settings.jsonc
 {
-  "readOnly": false,                   // アプリ全体: 編集可
+  "readOnly": false                    // アプリ全体: 編集可
+}
+```
+
+```jsonc
+// project-settings.jsonc
+{
   "roots": [
     { "name": "A", "path": "C:\\A", "readOnly": "readOnly" },   // A 配下: 全部 RO
     { "name": "B", "path": "C:\\B", "readOnly": "inherit"  }    // B 配下: アプリ全体に従う = 編集可

@@ -4,7 +4,7 @@ VSCode / Obsidian 風の **閲覧専用** ドキュメントビューア (Window
 
 - 左ペイン: フォルダツリー (エクスプローラ)
 - 右ペイン: タブ付きエディタ
-- 設定はすべて `settings.jsonc` で管理 (GUI 設定なし)
+- 設定は `settings.jsonc` と `project-settings.jsonc` で管理 (GUI 設定なし)
 - 標準ライブラリのみで実装 (NuGet 依存なし)
 
 ## 主な特徴
@@ -18,7 +18,7 @@ VSCode / Obsidian 風の **閲覧専用** ドキュメントビューア (Window
 ## ドキュメント
 
 - [getting-started.md](getting-started.md) — 初回起動とルートフォルダ追加
-- [configuration.md](configuration.md) — `settings.jsonc` の全項目
+- [configuration.md](configuration.md) — 設定ファイルの全項目
 - [read-only-modes.md](read-only-modes.md) — 読み取り専用モードの優先順位
 - [encoding.md](encoding.md) — 対応エンコーディングと制限
 - [external-editors.md](external-editors.md) — 「別なアプリで開く」設定例

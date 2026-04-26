@@ -12,14 +12,16 @@ namespace DocTree.App
     {
         public AppSettings Settings { get; private set; }
         public string SettingsPath { get; private set; }
+        public string ProjectSettingsPath { get; private set; }
 
         public FileSystemScanner Scanner { get; }
         public ReadOnlyResolver ReadOnly { get; private set; }
 
-        private AppContext(AppSettings settings, string settingsPath)
+        private AppContext(AppSettings settings, string settingsPath, string projectSettingsPath)
         {
             Settings = settings;
             SettingsPath = settingsPath;
+            ProjectSettingsPath = projectSettingsPath;
             Scanner = new FileSystemScanner();
             ReadOnly = new ReadOnlyResolver(settings);
         }
@@ -31,9 +33,18 @@ namespace DocTree.App
             {
                 DefaultSettingsWriter.WriteDefaultIfMissing(locate.Path);
             }
+            if (!locate.ProjectExisted)
+            {
+                var legacyLoaded = SettingsLoader.Load(locate.Path, locate.ProjectPath);
+                DefaultSettingsWriter.WriteProjectSettingsIfMissing(locate.ProjectPath, new ProjectSettings
+                {
+                    Roots = legacyLoaded.Settings.Roots,
+                    Overrides = legacyLoaded.Settings.Overrides
+                });
+            }
 
-            var loaded = SettingsLoader.Load(locate.Path);
-            return new AppContext(loaded.Settings, loaded.SourcePath);
+            var loaded = SettingsLoader.Load(locate.Path, locate.ProjectPath);
+            return new AppContext(loaded.Settings, loaded.SourcePath, loaded.ProjectSourcePath);
         }
 
         /// <summary>
@@ -41,7 +52,7 @@ namespace DocTree.App
         /// </summary>
         public static AppContext BootstrapEmpty()
         {
-            return new AppContext(new AppSettings(), AppPaths.AppDataSettingsPath);
+            return new AppContext(new AppSettings(), AppPaths.AppDataSettingsPath, AppPaths.AppDataProjectSettingsPath);
         }
 
         /// <summary>
@@ -49,7 +60,7 @@ namespace DocTree.App
         /// </summary>
         public void ReloadSettings()
         {
-            var loaded = SettingsLoader.Load(SettingsPath);
+            var loaded = SettingsLoader.Load(SettingsPath, ProjectSettingsPath);
             Settings = loaded.Settings;
             ReadOnly = new ReadOnlyResolver(loaded.Settings);
         }

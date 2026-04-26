@@ -21,7 +21,7 @@ namespace DocTree.Services.Settings
             var rootsArray = FindPropertyArray(json, "roots");
             if (rootsArray is null)
             {
-                throw new InvalidDataException("settings.jsonc に \"roots\" 配列が見つかりません。");
+                throw new InvalidDataException("project-settings.jsonc に \"roots\" 配列が見つかりません。");
             }
 
             var fragment = BuildRootFragment(root);
@@ -46,7 +46,7 @@ namespace DocTree.Services.Settings
             var rootsArray = FindPropertyArray(json, "roots");
             if (rootsArray is null)
             {
-                throw new InvalidDataException("settings.jsonc に \"roots\" 配列が見つかりません。");
+                throw new InvalidDataException("project-settings.jsonc に \"roots\" 配列が見つかりません。");
             }
 
             var range = FindRootElementRange(json, rootsArray.Value, rootPath);
@@ -145,7 +145,7 @@ namespace DocTree.Services.Settings
 
                 if (text[i] != '{')
                 {
-                    throw new InvalidDataException("settings.jsonc の \"roots\" 配列にオブジェクト以外の値があります。");
+                    throw new InvalidDataException("project-settings.jsonc の \"roots\" 配列にオブジェクト以外の値があります。");
                 }
 
                 var valueStart = i;
@@ -240,7 +240,7 @@ namespace DocTree.Services.Settings
                 {
                     index += 2;
                     while (index + 1 < text.Length && (text[index] != '*' || text[index + 1] != '/')) index++;
-                    if (index + 1 >= text.Length) throw new InvalidDataException("settings.jsonc のブロックコメントが閉じていません。");
+                    if (index + 1 >= text.Length) throw new InvalidDataException("project-settings.jsonc のブロックコメントが閉じていません。");
                     index += 2;
                     continue;
                 }
@@ -263,7 +263,7 @@ namespace DocTree.Services.Settings
                 if (text[i] == '"') return i;
             }
 
-            throw new InvalidDataException("settings.jsonc の文字列が閉じていません。");
+            throw new InvalidDataException("project-settings.jsonc の文字列が閉じていません。");
         }
 
         private static int FindMatchingArrayClose(string text, int openBracketIndex)
@@ -293,7 +293,7 @@ namespace DocTree.Services.Settings
                 }
             }
 
-            throw new InvalidDataException("settings.jsonc の \"roots\" 配列が閉じていません。");
+            throw new InvalidDataException("project-settings.jsonc の \"roots\" 配列が閉じていません。");
         }
 
         private static int FindMatchingObjectClose(string text, int openBraceIndex)
@@ -323,7 +323,7 @@ namespace DocTree.Services.Settings
                 }
             }
 
-            throw new InvalidDataException("settings.jsonc のルートフォルダ定義が閉じていません。");
+            throw new InvalidDataException("project-settings.jsonc のルートフォルダ定義が閉じていません。");
         }
 
         private readonly record struct ArrayLocation(int OpenBracketIndex, int CloseBracketIndex);

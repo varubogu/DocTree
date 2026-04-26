@@ -8,6 +8,7 @@ namespace DocTree.Services.Settings
     {
         public required AppSettings Settings { get; init; }
         public required string SourcePath { get; init; }
+        public required string ProjectSourcePath { get; init; }
         public List<string> Warnings { get; init; } = new();
     }
 
@@ -30,9 +31,15 @@ namespace DocTree.Services.Settings
 
         public static SettingsLoadResult Load(string path)
         {
+            return Load(path, GetDefaultProjectSettingsPath(path));
+        }
+
+        public static SettingsLoadResult Load(string path, string projectPath)
+        {
             var json = File.ReadAllText(path);
             var settings = JsonSerializer.Deserialize<AppSettings>(json, Options)
                 ?? throw new InvalidDataException("settings.jsonc のパースに失敗しました（null）。");
+            var warnings = new List<string>();
 
             // null 防御
             settings.TextExtensions ??= new();
@@ -42,6 +49,22 @@ namespace DocTree.Services.Settings
             settings.Overrides ??= new();
             settings.ExternalEditors ??= new();
             settings.Font ??= new FontSetting();
+
+            if (File.Exists(projectPath))
+            {
+                var projectJson = File.ReadAllText(projectPath);
+                var projectSettings = JsonSerializer.Deserialize<ProjectSettings>(projectJson, Options)
+                    ?? throw new InvalidDataException("project-settings.jsonc のパースに失敗しました（null）。");
+
+                projectSettings.Roots ??= new();
+                projectSettings.Overrides ??= new();
+                settings.Roots = projectSettings.Roots;
+                settings.Overrides = projectSettings.Overrides;
+            }
+            else if (settings.Roots.Count > 0 || settings.Overrides.Count > 0)
+            {
+                warnings.Add("settings.jsonc の roots / overrides を互換読み込みしました。project-settings.jsonc への移動を推奨します。");
+            }
             if (string.IsNullOrWhiteSpace(settings.DefaultEncoding))
                 settings.DefaultEncoding = "utf-8";
             if (settings.BinarySniffBytes <= 0)
@@ -63,8 +86,16 @@ namespace DocTree.Services.Settings
             return new SettingsLoadResult
             {
                 Settings = settings,
-                SourcePath = path
+                SourcePath = path,
+                ProjectSourcePath = projectPath,
+                Warnings = warnings
             };
+        }
+
+        private static string GetDefaultProjectSettingsPath(string settingsPath)
+        {
+            var directory = Path.GetDirectoryName(settingsPath);
+            return Path.Combine(directory ?? "", DocTree.App.AppPaths.ProjectSettingsFileName);
         }
     }
 }

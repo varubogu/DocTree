@@ -40,32 +40,6 @@
   // 全ルート共通でツリーから除外するフォルダ・ファイル名（完全一致、大文字小文字無視）。
   "exclude": [ ".git", ".obsidian" ],
 
-  // ルートフォルダ（複数指定可）。
-  // path はローカルパスまたは UNC パス (\\server\share\...)。
-  // readOnly:
-  //   "inherit"  ... アプリ全体の readOnly に従う
-  //   "readOnly" ... このルート配下を読み取り専用にする
-  //   "writable" ... このルート配下を編集可能にする
-  // exclude: このルートだけで追加除外するフォルダ・ファイル名（完全一致、大文字小文字無視）。
-  "roots": [
-    // {
-    //   "name": "Work Docs",
-    //   "path": "C:\\Users\\me\\Documents\\Work",
-    //   "readOnly": "inherit",
-    //   "exclude": [ "node_modules", "bin", "obj" ]
-    // },
-    // {
-    //   "name": "Shared",
-    //   "path": "\\\\fileserver\\share\\docs",
-    //   "readOnly": "readOnly"
-    // }
-  ],
-
-  // ファイル/フォルダ単位の読み取り専用オーバーライド（path は前方一致、最長一致が勝つ）。
-  "overrides": [
-    // { "path": "C:\\Users\\me\\Documents\\Work\\drafts", "readOnly": "writable" }
-  ],
-
   // 「別なアプリで開く」候補。
   // args の中で {path} {line} {column} を置換します。
   // default: true のものを最優先候補（ダブルクリック既定）に使えます。
