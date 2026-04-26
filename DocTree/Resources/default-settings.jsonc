@@ -24,7 +24,7 @@
   ],
 
   // 拡張子なしでもテキスト扱いするファイル名（完全一致、大文字小文字無視）。
-  "textFilenames": [ "README", "LICENSE", "Makefile", "Dockerfile", "CHANGELOG" ],
+  "textFilenames": [ "README", "LICENSE", "Makefile", "Dockerfile", "CHANGELOG", ".gitignore" ],
 
   // バイナリ判定（ヌルバイト検出）で先頭何バイト読むか。
   "binarySniffBytes": 8192,
